@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="js/jquery-1.11.3.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var xhr;
+	    var ot;
+	    var oloaded;
+		 	function fileSelected() {
+		 		var file = document.getElementById('file').files[0];
+	            if (file) {
+	                var fileSize = 0;
+	                if (file.size > 1024 * 1024)
+	                    fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+	                else
+	                    fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+	 
+	                document.getElementById('fileName').innerHTML = 'Name: ' + file.name;
+	                document.getElementById('fileSize').innerHTML = 'Size: ' + fileSize;
+	                document.getElementById('fileType').innerHTML = 'Type: ' + file.type;
+	            }
+	        }
+		 	
+		 	function uploadFile() {
+		 		var file = document.getElementById('file').files[0];
+	            var url = "admin/test"; // 接收上传文件的后台地址 
+	            var formData = new FormData();
+	            formData.append("mf", file);
+		 		$.ajax({
+		 		    type: "POST",
+		 		　　url: url,
+		 		　　data: {formData: formData},　　//这里上传的数据使用了formData 对象
+		 		　　processData : false, 
+		 		　　//必须false才会自动加上正确的Content-Type 
+		 		　　contentType : false,
+		 			beforeSend : function() {
+		 				//这里我们先拿到jQuery产生的 XMLHttpRequest对象，为其增加 progress 事件绑定，然后再返回交给ajax使用
+		 				var xhr = $.ajaxSettings.xhr();
+		 		　　　　if(onprogress && xhr.upload) {
+		 		　　　　　  xhr.upload.onprogress = uploadProgress;
+		 		 　　	}
+		 				ot = new Date().getTime(); //设置上传开始时间
+		                oloaded = 0; //设置上传开始时，已上传的文件大小为0
+		 			}
+		 		　　
+		 		});
+		 	}
+	 
+	        function uploadFilebak() {
+	        	var file = document.getElementById('file').files[0];
+	            var url = "admin/test"; // 接收上传文件的后台地址 
+	            var fd = new FormData();
+	            fd.append("mf", file);
+	            xhr = new XMLHttpRequest();
+	            xhr.open("POST", url);
+	            
+	            xhr.onload = uploadComplete; //请求完成
+	            xhr.onerror = uploadFailed; //请求失败
+	            xhr.upload.onprogress = uploadProgress;//【上传进度调用方法实现】
+// 	            xhr.addEventListener("load", uploadComplete, false);
+// 	            xhr.addEventListener("error", uploadFailed, false);
+// 	            xhr.addEventListener("abort", uploadCanceled, false);
+// 	            xhr.upload.addEventListener("progress", uploadProgress, false);
+
+	            xhr.upload.onloadstart = function(){//上传开始执行方法
+	                ot = new Date().getTime();   //设置上传开始时间
+	                oloaded = 0;//设置上传开始时，已上传的文件大小为0
+	            };
+	            xhr.send(fd);
+	        }
+	 
+	      	//上传进度实现方法，上传过程中会频繁调用该方法
+	        function uploadProgress(evt) {
+        	 	var progressBar = document.getElementById("progressBar");  
+        	    var percentageDiv = document.getElementById("percentage");  
+	            if (evt.lengthComputable) {
+	            	progressBar.max = evt.total;  
+	                progressBar.value = evt.loaded;  
+	                percentageDiv.innerHTML = Math.round(evt.loaded / evt.total * 100) + "%";  
+	            }
+	            var time = document.getElementById("time");
+	            var nt = new Date().getTime();//获取当前时间
+	            var pertime = (nt-ot)/1000; //计算出上次调用该方法时到现在的时间差，单位为s
+	            ot = new Date().getTime(); //重新赋值时间，用于下次计算
+	            
+	            var perload = evt.loaded - oloaded; //计算该分段上传的文件大小，单位b       
+	            oloaded = evt.loaded;//重新赋值已上传文件大小，用以下次计算
+	            
+	          	//上传速度计算
+	            var speed = perload/pertime;//单位b/s
+	            var bspeed = speed;
+	            var units = 'b/s';//单位名称
+	            if(speed/1024>1){
+	                speed = speed/1024;
+	                units = 'k/s';
+	            }
+	            if(speed/1024>1){
+	                speed = speed/1024;
+	                units = 'M/s';
+	            }
+	            speed = speed.toFixed(1);
+
+	            //剩余时间
+	            var resttime = ((evt.total-evt.loaded)/bspeed).toFixed(1);
+	            time.innerHTML = '，速度：'+speed+units+'，剩余时间：'+resttime+'s';
+	               if(bspeed==0){
+	               		time.innerHTML = '上传已取消';
+	               }
+	        }
+	 
+	        function uploadComplete(evt) {
+// 	            alert("upload success.");
+				console.log(evt.target.result);
+	        }
+	 
+	        function uploadFailed(evt) {
+	            alert("There was an error attempting to upload the file.");
+	        }
+	 
+	        function uploadCanceled(evt) {
+	        	xhr.abort();
+	        }
+	        
+	        $(function(){
+	            $('#add').submit(function(){
+	                var data = new FormData($('#add')[0]);
+	                var panda = [1,2,3];
+	                var param = {'name': panda, 'age': "23"};
+	                $.ajax({  
+	                    url: 'admin/test',  
+	                    type: 'POST',  
+	                    data: param,
+	                    dataType: 'JSON',  
+// 	                    cache: false,  
+// 	                    processData: false,  
+// 	                    contentType: false, 
+	                    success:function(data){  
+	                        console.log(data.info);
+	                    }   
+	                });  
+	                return false;   
+	            });
+	        });
+	</script>
+	
+    
+	<input type="file" id="file" name="myfile" onchange="fileSelected();"/>
+	<div id="fileName"></div>
+    <div id="fileSize"></div>
+    <div id="fileType"></div>
+	<input type="button" onclick="uploadFile()" value="上传" />
+    <input type="button" onclick="uploadCanceled()" value="取消" />
+    
+    <br/>
+    <progress id="progressBar" value="0" max="100"></progress>  
+	<span id="percentage"></span><span id="time"></span>
+	
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<form id='add'>
+	<input type="text" name='book'></input>
+	<input type="file" name='source'></input>
+	<input type="submit">
+	</form>
+	
+</body>
+</html>

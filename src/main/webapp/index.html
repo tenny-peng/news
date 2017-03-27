@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>首页</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="css/bootstrap/bootstrap.css"></link>
+		<link rel="stylesheet" href="css/index/index.css"></link>
+	</head>
+	<body>
+	<div class="container">
+	
+		<div class="col-md-12">
+			<div class="col-md-6">
+				<div class="input-group padding-top">
+				    <input id="queryWord" type="text" class="form-control" onkeydown="onKeyDown(event)">
+				    <span id="search" class="input-group-addon btn btn-primary">搜索</span>
+				</div>
+	       		<div class="padding-top">
+					<ul class="nav nav-pills">
+						<li id="value99" class="active">
+							<a href="#">全部</a>
+						</li>
+						<li id="value0">
+							<a href="#">电子</a>
+						</li>
+						<li id="value1">
+							<a href="#">互联网</a>
+						</li>
+						<li id="value2">
+							<a href="#">软件</a>
+						</li>
+						<li id="value3">
+							<a href="#">智能家居</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-4">
+			</div>
+			<div class="col-md-2">
+				<div class="padding-top">
+			 		<a data-toggle="dropdown" href="javascript: void(0);">
+			 			<img src="images/user.png" />
+			 			<span id="username">未登录</span>
+			 			<span class="caret"></span>
+			 		</a>
+					<ul class="dropdown-menu">
+						<li>
+							 <a href="login.html">登录/切换账号</a>
+						</li>
+						<li>
+							 <a href="checkagree.html" target="_blank">查看收藏</a>
+						</li>
+						<li>
+							 <a href="javascript: void(0);" onclick="loginOut()">退出</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-md-12">
+			<div class="padding-top">
+				<div id="masonry">
+			    </div>
+			</div>
+		</div>
+		
+	</div>
+	<div onclick="toTop()" style="position:fixed; right:0px; bottom:10px; width:20px; height:100px; background-color:#CCC; cursor:pointer">
+		返回顶部
+	</div>
+	</body>
+	
+	<script src="js/jquery/jquery-3.1.1.js"></script>
+	<script src="js/bootstrap/bootstrap.js"></script>
+	<script src="js/masonry/masonry.pkgd.js"></script>
+	<script src="js/masonry/imagesloaded.pkgd.js"></script>
+  	<script src="js/index/index.js"></script>
+</html>

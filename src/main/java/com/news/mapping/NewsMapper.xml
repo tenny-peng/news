@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.news.dao.INewsDao">
+	<resultMap id="BaseResultMap" type="com.news.pojo.News">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="src" property="src" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="author" property="author" jdbcType="INTEGER" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="keyword" property="keyword" jdbcType="VARCHAR" />
+		<result column="createtime" property="createTime" />
+		<result column="click" property="click" />
+		<result column="agree" property="agree" />
+		<result column="collect" property="collect" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, src, title, content, author, type, keyword, createtime, click, agree, collect
+	</sql>
+	
+	<insert id="addOneNews" parameterType="com.news.pojo.News">
+		insert into pub_news (id, src, title, content, author, type, keyword, createtime, click, agree, collect)
+		values (#{id}, #{src}, #{title},#{content},#{author},#{type},#{keyword},#{createTime},#{click},#{agree},#{collect})
+	</insert>
+	
+	<update id="upNewsByNews" parameterType="com.news.pojo.News">
+		update pub_news
+		<set>
+			<if test="src != null">
+				src = #{src,jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="author != null">
+				author = #{author,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="keyword != null">
+				keyword = #{keyword,jdbcType=VARCHAR},
+			</if>
+			<if test="click != null">
+				click = #{click,jdbcType=INTEGER},
+			</if>
+			<if test="agree != null">
+				agree = #{agree,jdbcType=INTEGER},
+			</if>
+			<if test="collect != null">
+				collect = #{collect,jdbcType=INTEGER}
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="getOneNewsById" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">  
+		select
+		<include refid="Base_Column_List" />
+		from pub_news
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getNewsByLimit" resultMap="BaseResultMap">
+		SELECT
+		id, src, title, author, type, keyword, createtime, click, agree, collect
+		FROM pub_news
+		WHERE 1=1
+		<if test="idList != null and idList.size() > 0">
+			AND id NOT IN
+			<foreach collection="idList" item="item" index="index" open="(" close=")" separator=",">
+       			#{item}
+       		</foreach>
+		</if>
+		<if test="type != null">
+			AND type = #{type}
+		</if>
+		<if test="singleKeyword != null and singleKeyword != ''">
+			AND keyword like CONCAT('%', #{singleKeyword}, '%')
+		</if>
+		<if test="queryWord != null and queryWord != ''">
+			AND (
+				title like CONCAT('%', #{queryWord}, '%')
+				OR
+				content like CONCAT('%', #{queryWord}, '%')
+				OR
+				keyword like CONCAT('%', #{queryWord}, '%')
+			)
+		</if>
+		<if test="startTime != null">
+			<![CDATA[ AND createtime >= #{startTime}]]>
+		</if>
+		<if test="endTime != null">
+			 <![CDATA[AND createtime <= #{endTime}]]>
+		</if>
+		ORDER BY createtime DESC
+		<if test="startNum != null and allNum != null">
+			limit #{startNum}, #{allNum}
+		</if>
+	</select>
+	
+	<select id="getHotNewsByLimit" resultMap="BaseResultMap">
+		SELECT
+		id, src, title, author, type, keyword, createtime, click, agree, collect
+		FROM pub_news
+		WHERE 1=1
+		<if test="idList != null and idList.size() > 0">
+			AND id NOT IN
+			<foreach collection="idList" item="item" index="index" open="(" close=")" separator=",">
+       			#{item}
+       		</foreach>
+		</if>
+		<if test="startTime != null">
+			<![CDATA[ AND createtime >= #{startTime}]]>
+		</if>
+		<if test="endTime != null">
+			 <![CDATA[AND createtime <= #{endTime}]]>
+		</if>
+		ORDER BY click DESC
+		<if test="startNum != null and allNum != null">
+			limit #{startNum}, #{allNum}
+		</if>
+	</select>
+	
+	<select id="getAgreeOrCollectNewsByLimit" resultMap="BaseResultMap">
+		SELECT
+		n.id, n.title, n.type, n.agree, n.collect, c.createtime
+		FROM pub_news n
+		INNER JOIN pub_click c
+		ON n.id = c.newsid
+		WHERE c.userid = #{userId} 
+		AND c.type = #{type}
+		ORDER BY c.createtime DESC
+		<if test="startNum != null and allNum != null">
+			limit #{startNum}, #{allNum}
+		</if>
+	</select>
+	
+	<select id="getNewsByTitle" resultMap="BaseResultMap" parameterType="java.lang.String">  
+		select
+		<include refid="Base_Column_List" />
+		from pub_news
+		where title = #{title,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="delOneNewsByNewsId" parameterType="java.lang.Integer">
+		delete from pub_news
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+</mapper>

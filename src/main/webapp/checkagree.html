@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>查看收藏</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="css/bootstrap/bootstrap.css"></link>
+		<link rel="stylesheet" href="css/checkagree/checkagree.css"></link>
+	</head>
+	<body>
+	<div class="container">
+	
+		<div class="col-md-12 column">
+			<div class="tabbable padding-top">
+				<ul class="nav nav-pills nav-tabs">
+					<li class="active">
+						 <a href="#agree" data-toggle="tab">已点赞</a>
+					</li>
+					<li>
+						 <a href="#collect" data-toggle="tab">已收藏</a>
+					</li>
+				</ul>
+				<div class="tab-content margin-top">
+					<div class="tab-pane fade in active" id="agree">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>
+										标题
+									</th>
+									<th>
+										类型
+									</th>
+									<th>
+										总赞数
+									</th>
+									<th>
+										总收藏数
+									</th>
+									<th>
+										操作时间
+									</th>
+								</tr>
+							</thead>
+							<tbody id="agreeInfo">
+							</tbody>
+						</table>
+						<div class="col-md-9">
+						</div>
+						<div class="col-md-3">
+						 	<button type="button" class="btn btn-default btn-primary" id="prevAgree">上一页</button>
+						 	<button type="button" class="btn btn-default btn-primary margin-left" id="nextAgree">下一页</button>
+						</div>
+						
+						<div class="modal fade" id="myModal" role="dialog" aria-hidden="true" data-backdrop="static">
+							<div>
+								<div id="loading" class="loading">获取中...</div>
+							</div>
+						</div> 
+						
+					</div>
+					<div class="tab-pane fade" id="collect">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>
+										标题
+									</th>
+									<th>
+										类型
+									</th>
+									<th>
+										总赞数
+									</th>
+									<th>
+										总收藏数
+									</th>
+									<th>
+										操作时间
+									</th>
+								</tr>
+							</thead>
+							<tbody id="collectInfo">
+							</tbody>
+						</table>
+						<div class="col-md-9">
+						</div>
+						<div class="col-md-3">
+						 	<button type="button" class="btn btn-default btn-primary" id="prevCollect">上一页</button>
+						 	<button type="button" class="btn btn-default btn-primary margin-left" id="nextCollect">下一页</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	</body>
+	
+	<script src="js/jquery/jquery-3.1.1.js"></script>
+	<script src="js/bootstrap/bootstrap.js"></script>
+  	<script src="js/checkagree/checkagree.js"></script>
+</html>

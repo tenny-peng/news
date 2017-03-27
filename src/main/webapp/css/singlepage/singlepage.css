@@ -1,0 +1,59 @@
+body {
+	background-image: url(../../images/background.png);
+	background-size:cover;
+}
+.padding-top {
+	padding-top: 20px;
+}
+.hand {
+	cursor: pointer;
+}
+.bigbox {
+	height: 240px;
+	width: 264px;
+	float: left;
+	padding: 20px;
+}
+.bigbox img {
+	max-width: 244px;
+	max-height: 160px;
+	display: block;
+	margin: 0px auto;
+	border-radius: 6px;
+}
+.jobbox {
+	height: 80px;
+	width: 284px;
+	float: left;
+	padding: 20px;
+}
+.artical_title{
+	font-size: 32px;
+	font-weight: 700;
+	line-height: 48px;
+	color: #222;
+}
+.artical_content {
+	diaplay: block;
+	font-size: 16px;
+	color: #222;
+	line-height: 32px;
+	word-wrap: break-word;
+	font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", "Helvetica Neue", Arial, sans-serif;
+}
+.artical_content img{
+	display: block;
+	margin: 0 auto;
+}
+.artical_keyword a{
+	display: inline-block;
+	margin: 0 8px 0 8px;
+	font-size: 14px;
+	font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", "Helvetica Neue", Arial, sans-serif;
+}
+.margin-left {
+	margin-left: 20px;
+}
+.color_red{
+	color: #ff0000;
+}

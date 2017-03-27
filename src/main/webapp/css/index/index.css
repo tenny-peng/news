@@ -1,0 +1,28 @@
+body {
+	background-image: url(../../images/background.png);
+	background-size:cover;	
+}
+.padding-top {
+	padding-top: 20px;
+}
+.box {
+	height: 220px;
+	width: 224px;
+	float: left;
+	padding:20px;
+}
+.box img {
+	max-width: 204px;
+	max-height: 140px;
+	display:block;
+	margin:0px auto;
+	border-radius: 6px;
+}
+/* .box a{ */
+/* 	display:block; */
+/* 	text-align:center; */
+/* 	overflow:hidden; */
+/* 	word-break:keep-all; */
+/* 	white-space:nowrap; */
+/* 	text-overflow:ellipsis; */
+/* } */

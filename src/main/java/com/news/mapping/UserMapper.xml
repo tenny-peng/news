@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.news.dao.IUserDao">
+	<resultMap id="BaseResultMap" type="com.news.pojo.User">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="createtime" property="createTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, username, password, type, createtime
+	</sql>
+	
+	<insert id="addOneUser" parameterType="com.news.pojo.User">
+		INSERT INTO pub_user 
+		(id, username, password,type, createtime)
+		VALUES 
+		(
+		#{id,jdbcType=INTEGER}, 
+		#{username,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{type,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
+	<select id="getOneUserByName" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from pub_user
+		where username = #{username}
+	</select>
+	
+	<select id="getOneUserByNamePwd" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from pub_user
+		where username = #{username}
+		AND password = #{password}
+	</select>
+	
+	<select id="getAllUsers" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from pub_user
+		where 1 = 1
+		<if test="type != null and type != 0">
+			and type = #{type}
+		</if>
+	</select>
+	
+	<delete id="delOneUserById" parameterType="java.lang.Integer">
+		delete from pub_user
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+</mapper>

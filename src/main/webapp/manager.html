@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>管理</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="css/bootstrap/bootstrap.css"></link>
+		<link rel="stylesheet" href="css/manager/manager.css"></link>
+	</head>
+	<body>
+	<div class="container">
+	
+		<div class="col-md-12 column">
+			<div class="tabbable padding-top">
+				<ul class="nav nav-pills nav-tabs">
+					<li class="active">
+						 <a href="#news" data-toggle="tab">新闻</a>
+					</li>
+					<li>
+						 <a href="#user" data-toggle="tab">用户</a>
+					</li>
+				</ul>
+				<div class="tab-content margin-top">
+					<div class="tab-pane fade in active" id="news">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>
+										标题
+									</th>
+									<th>
+										类型
+									</th>
+									<th>
+										关键词
+									</th>
+									<th>
+										点击量
+									</th>
+									<th>
+										点赞数
+									</th>
+									<th>
+										收藏数
+									</th>
+									<th>
+										创建时间
+									</th>
+								</tr>
+							</thead>
+							<tbody id="newsInfo">
+							</tbody>
+						</table>
+						<div class="col-md-4">
+							<button type="button" class="btn btn-default btn-success" onclick="getLastNews()">点击获取最新新闻</button>
+						</div>
+						<div class="col-md-5">
+						</div>
+						<div class="col-md-3">
+						 	<button type="button" class="btn btn-default btn-primary" id="prev">上一页</button>
+						 	<button type="button" class="btn btn-default btn-primary margin-left" id="next">下一页</button>
+						</div>
+						
+						<div class="modal fade" id="myModal" role="dialog" aria-hidden="true" data-backdrop="static">
+							<div>
+								<div id="loading" class="loading">获取中...</div>
+							</div>
+						</div> 
+						
+					</div>
+					<div class="tab-pane fade" id="user">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>
+										用户名
+									</th>
+									<th>
+										密码
+									</th>
+									<th>
+										用户类型
+									</th>
+									<th>
+										创建时间
+									</th>
+									<th>
+										操作
+									</th>
+								</tr>
+							</thead>
+							<tbody id="userInfo">
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	</body>
+	
+	<script src="js/jquery/jquery-3.1.1.js"></script>
+	<script src="js/bootstrap/bootstrap.js"></script>
+  	<script src="js/manager/manager.js"></script>
+</html>

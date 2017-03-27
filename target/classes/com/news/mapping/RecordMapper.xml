@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.news.dao.IRecordDao">
+	<resultMap id="BaseResultMap" type="com.news.pojo.Record">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="userid" property="userId" jdbcType="INTEGER" />
+		<result column="newstype" property="newsType" jdbcType="INTEGER" />
+		<result column="count" property="count" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, userid, newstype, count
+	</sql>
+	
+	<select id="findByParam" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="Base_Column_List" />
+		FROM pub_record
+		WHERE 1 = 1
+		<if test="userId != null">
+			AND userid = #{userId}
+		</if>
+		<if test="newsType != null">
+			AND newstype = #{newsType}
+		</if>
+	</select>
+	
+	<select id="findByUserId" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="Base_Column_List" />
+		FROM pub_record
+		WHERE userid = #{userId}
+		ORDER BY count DESC;
+	</select>
+	
+	<update id="updateRecord">
+		UPDATE pub_record
+		SET count = #{count}
+		WHERE id = #{id}
+	</update>
+	
+	<insert id="addRecord">
+		INSERT INTO pub_record
+		(userid, newstype, count)
+		VALUES
+		(#{userId},#{newsType},#{count})
+	</insert>
+</mapper>
