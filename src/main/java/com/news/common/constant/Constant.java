@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2014-2018 Chenlaisoft Co.Ltd. All rights reserved.
- */
-
 package com.news.common.constant;
 
 /**
