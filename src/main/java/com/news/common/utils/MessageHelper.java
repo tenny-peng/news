@@ -1,5 +1,7 @@
 package com.news.common.utils;
 
+import java.util.Locale;
+
 import org.springframework.context.MessageSource;
 
 public class MessageHelper {
@@ -15,7 +17,11 @@ public class MessageHelper {
 	}
 
 	public static String getMessage(String code, Object[] args) {
-		return messageSource.getMessage(code, args, null);
+		return messageSource.getMessage(code, args, Locale.getDefault());
+	}
+
+	public static String getMessage(String code, Object[] args, Locale locale) {
+		return messageSource.getMessage(code, args, locale);
 	}
 
 }
