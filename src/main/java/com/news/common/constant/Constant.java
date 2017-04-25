@@ -1,7 +1,7 @@
 package com.news.common.constant;
 
 /**
- * TODO
+ * 枚举
  * 
  * @author Tenny
  */

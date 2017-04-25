@@ -71,12 +71,37 @@
             <artifactId>spring-context-support</artifactId>  
             <version>${spring.version}</version>  
         </dependency>  
-  
-        <dependency>  
-            <groupId>org.springframework</groupId>  
-            <artifactId>spring-test</artifactId>  
-            <version>${spring.version}</version>  
-        </dependency>  
+        
+        <!-- spring redis 整合-->
+        <dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>1.4.1.RELEASE</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+		
+		<!-- spring activemq 整合 -->
+		<dependency>
+      		<groupId>org.springframework</groupId>
+      		<artifactId>spring-jms</artifactId>
+      		<version>${spring.version}</version>
+    	</dependency>
+		<dependency>  
+            <groupId>org.apache.activemq</groupId>  
+            <artifactId>activemq-core</artifactId>  
+            <version>5.7.0</version>  
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-pool</artifactId>
+            <version>5.7.0</version>
+        </dependency>
+        
         <!-- mybatis核心包 -->  
         <dependency>  
             <groupId>org.mybatis</groupId>  

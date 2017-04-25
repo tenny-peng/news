@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+                        http://www.springframework.org/schema/beans/spring-beans.xsd  
+                        http://www.springframework.org/schema/context  
+                        http://www.springframework.org/schema/context/spring-context.xsd  
+                        http://www.springframework.org/schema/mvc  
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+                        
+    <context:property-placeholder location="classpath:redis.properties" />  
+    
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">  
+        <property name="maxTotal" value="${redis.maxTotal}" />
+        <property name="maxIdle" value="${redis.maxIdle}" />
+        <property name="minIdle" value="${redis.minIdle}" />
+        <property name="maxWaitMillis" value="${redis.maxWaitMillis}" />
+        <property name="testOnBorrow" value="${redis.testOnBorrow}" />
+    </bean>
+    
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+		p:hostName="${redis.host}" p:port="${redis.port}" p:password="${redis.pass}" c:poolConfig-ref="poolConfig">
+    </bean>  
+    
+    <bean id="keySerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+    
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">  
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="keySerializer" ref="keySerializer" />
+    </bean>
+    
+    <bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager" c:template-ref="redisTemplate">
+        <property name="usePrefix" value="true" />
+        <property name="cacheNames">
+            <set>
+                <value>t</value>
+                <value>c</value>
+            </set>
+        </property>
+    </bean>
+    
+</beans>  
