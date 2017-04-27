@@ -8,12 +8,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans  
                         http://www.springframework.org/schema/beans/spring-beans.xsd  
                         http://www.springframework.org/schema/context  
-                        http://www.springframework.org/schema/context/spring-context.xsd  
-                        http://www.springframework.org/schema/mvc  
-                        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+                        http://www.springframework.org/schema/context/spring-context.xsd">
                         
-    <context:property-placeholder location="classpath:redis.properties" />  
-    
     <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">  
         <property name="maxTotal" value="${redis.maxTotal}" />
         <property name="maxIdle" value="${redis.maxIdle}" />
@@ -22,14 +18,14 @@
         <property name="testOnBorrow" value="${redis.testOnBorrow}" />
     </bean>
     
-    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+    <bean id="redisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
 		p:hostName="${redis.host}" p:port="${redis.port}" p:password="${redis.pass}" c:poolConfig-ref="poolConfig">
-    </bean>  
+    </bean>
     
     <bean id="keySerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer" />
     
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">  
-        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="connectionFactory" ref="redisConnectionFactory" />
         <property name="keySerializer" ref="keySerializer" />
     </bean>
     
